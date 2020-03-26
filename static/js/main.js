@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function (event) {
-    var map = L.map('map').setView([49.8153, 6.1296], 10);
+    var map = L.map('map').setView([49.7230, 6.1144], 12);
 
     var clipboard = new ClipboardJS('.clipboard');
 
