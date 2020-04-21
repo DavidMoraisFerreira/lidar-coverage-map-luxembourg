@@ -18,11 +18,17 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
     var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | David Morais Ferreira | <a href="https://github.com/DavidMoraisFerreira/lidar-coverage-map-luxembourg" target="_blank">Repository on Github</a>'
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://github.com/DavidMoraisFerreira/lidar-coverage-map-luxembourg" target="_blank">Repository on Github</a>'
     }).addTo(map);
 
+    var OSM_LIDAR_Hillshade = L.tileLayer('https://lidar-hillshade-2019.openstreetmap.lu/layer/mappers_delight_lidar_hillshade_2019/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | <a href="https://github.com/DavidMoraisFerreira/lidar-coverage-map-luxembourg" target="_blank">Repository on Github</a>'
+    });
+
     var baseMaps = {
-        "OpenStreetMap": OpenStreetMap_Mapnik
+        "OpenStreetMap": OpenStreetMap_Mapnik,
+        "LiDAR 2019 Hillshade": OSM_LIDAR_Hillshade
     };
     
     var overlayMaps = {
