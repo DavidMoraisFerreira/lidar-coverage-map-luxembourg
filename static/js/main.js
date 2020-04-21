@@ -1,3 +1,4 @@
+//This is very ugly code and should be reworked :)
 document.addEventListener("DOMContentLoaded", function (event) {
     var map = L.map('map').setView([49.7230, 6.1144], 12);
 
@@ -8,6 +9,11 @@ document.addEventListener("DOMContentLoaded", function (event) {
         style: styleModel
     }).addTo(map);
 
+    var dtmGrid = L.geoJson(dtmGridData, {
+        onEachFeature: onEachFeature,
+        style: styleModel
+    });
+
     var selectedTiles = new Set();
 
     var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -15,6 +21,30 @@ document.addEventListener("DOMContentLoaded", function (event) {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | David Morais Ferreira | <a href="https://github.com/DavidMoraisFerreira/lidar-coverage-map-luxembourg" target="_blank">Repository on Github</a>'
     }).addTo(map);
 
+    var baseMaps = {
+        "OpenStreetMap": OpenStreetMap_Mapnik
+    };
+    
+    var overlayMaps = {
+        "Grid": {
+            "LiDAR Grid": lidarGrid,
+            "DTM Grid": dtmGrid
+        }
+    };
+    var options = {
+        exclusiveGroups: ["Grid"],
+        groupCheckboxes: true,
+        collapsed: false
+      };
+
+    L.control.groupedLayers(baseMaps, overlayMaps, options).addTo(map);
+
+    map.on('overlayadd', function(){
+        selectedTiles = new Set();
+        lidarGrid.resetStyle();
+        dtmGrid.resetStyle();
+    });
+    
     var info = L.control();
     info.onAdd = function (map) {
         this._div = L.DomUtil.create('div', 'info');
@@ -27,7 +57,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
         <img src="./static/images/OSM_Luxembourg_Logo.svg" height="100px" style="float:right;display:block; margin-left:5px;" />
         <h3>LiDAR Coverage Map Luxembourg</h3>
         <p style="margin-top:10px;">
-        Allows you to select open data <a href="https://data.public.lu/fr/datasets/lidar-2019-releve-3d-du-territoire-luxembourgeois/" target="_blank">LIDAR 2019</a> tiles and export the list of URLs. <br /> <br />
+        Allows you to select open data <a href="https://data.public.lu/fr/datasets/lidar-2019-releve-3d-du-territoire-luxembourgeois/" target="_blank">LIDAR 2019</a> tiles and export the list of URLs. <br /> <br /> 
+        
+        By switching to the "DTM Grid", you can download individual tiles currently hosted by the <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank">OSMF</a>.
+        <br /><br />
         If you want to download the whole dataset, please use the <a href="https://data.public.lu/fr/datasets/r/e2cb8cdb-6886-4560-83f5-14ac14606db2" target="_blank">provided script</a>.
         </p>
         <hr style="height:1px; background-color: #ccc; border:0 none;"/>
