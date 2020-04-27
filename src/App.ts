@@ -94,6 +94,10 @@ export class App {
         const clipboard = new ClipboardJS('#clipboardButton');
         clipboard.on('success', (event: ClipboardJS.Event) => {
             event.clearSelection();
+            console.log(this);
+            const btnElement = document.getElementById("clipboardButton");
+            btnElement?.classList.add("bg-green-300");
+            setTimeout(() => btnElement?.classList.remove("bg-green-300"), 800);
         });
 
         //this.registerSideBar();        
