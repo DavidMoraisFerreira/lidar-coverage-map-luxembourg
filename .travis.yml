@@ -1,0 +1,25 @@
+language: node_js
+
+node_js:
+  - 'node'
+  - 'lts/*'
+  - '12'
+  - '10'
+  - '8'
+
+env:
+  - TYPESCRIPT=typescript@latest
+  - TYPESCRIPT=typescript@next
+
+branches:
+  only:
+  - master
+  - develop
+  - /^feature.*$/
+
+script:
+  - "npm run build"
+#  - "npm run test"
+
+git:
+  depth: 1
