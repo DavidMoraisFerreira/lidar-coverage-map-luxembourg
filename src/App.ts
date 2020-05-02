@@ -36,7 +36,7 @@ export class App {
             attribution: attributionText
         }).addTo(this.map);
 
-        const OSMLIDARHillshade = L.tileLayer('https://lidar-hillshade-2019.openstreetmap.lu/layer/mappers_delight_lidar_hillshade_2019/{z}/{x}/{y}.png', {
+        const OSMLIDARHillshade = L.tileLayer('https://lidar-hillshade-2019.openstreetmap.lu/layer/mappers_delight_lidar_hillshade_2019_reprojected/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: attributionText
         });

@@ -15,8 +15,6 @@ export class SelectionManager {
     }
 
     addToSelection(url: string) {
-        console.log(url);
-        console.log(this.selectedTiles.size);
         this.selectedTiles.add(url);
         this.buildText();
     }
