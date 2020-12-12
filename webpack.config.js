@@ -4,6 +4,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
+const webpack = require('webpack');
+const ASSET_PATH = process.env.ASSET_PATH || '/';
 
 module.exports = {
   entry: './src/Index.ts',
@@ -65,6 +67,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+	publicPath: ASSET_PATH,
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -78,12 +81,15 @@ module.exports = {
       filename: "index.html",
       hash: true,
       inject: true
+    }),
+	new webpack.DefinePlugin({
+      'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
     })
   ],
   optimization: {
-    minimizer: [new UglifyJsPlugin({
-      parallel: true,
-      sourceMap: true
-    })],
+    //minimizer: [new UglifyJsPlugin({
+    //  parallel: true,
+    //  sourceMap: true
+    //})],
   },
 };
