@@ -1,11 +1,11 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const webpack = require('webpack');
-const ASSET_PATH = process.env.ASSET_PATH || '/';
+const ASSET_PATH = process.env.ASSET_PATH || ''; //Default should be root (/)
 
 module.exports = {
   entry: './src/Index.ts',
@@ -87,9 +87,7 @@ module.exports = {
     })
   ],
   optimization: {
-    //minimizer: [new UglifyJsPlugin({
-    //  parallel: true,
-    //  sourceMap: true
-    //})],
+    minimize: true,
+    minimizer: [new TerserPlugin({})],
   },
 };
