@@ -2,6 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 const webpack = require('webpack');
@@ -17,16 +18,6 @@ module.exports = {
         test: /\.js$/,
         enforce: "pre",
         loader: "source-map-loader"
-      },
-      {
-        test: /\.(ts|tsx)$/,
-        enforce: 'pre',
-        use: [
-          {
-            loader: 'eslint-loader'
-          },
-        ],
-        exclude: /node_modules/,
       },
       {
         test: [/\.(js|ts)$/],
@@ -70,7 +61,7 @@ module.exports = {
 	publicPath: ASSET_PATH,
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000
   },
@@ -82,9 +73,10 @@ module.exports = {
       hash: true,
       inject: true
     }),
-	new webpack.DefinePlugin({
+    new webpack.DefinePlugin({
       'process.env.ASSET_PATH': JSON.stringify(ASSET_PATH),
-    })
+    }),
+    new ESLintPlugin()
   ],
   optimization: {
     minimize: true,
